@@ -1,0 +1,28 @@
+{
+    "name": "diatem-net/jin-webapp",
+    "description": "Micro framework for web applications.",
+    "type": "library",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Loïc Gérard",
+            "email": "lgerard@diatem.net"
+        },
+        {
+            "name": "Samuel Marchal",
+            "email": "smarchal@diatem.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0",
+        "diatem-net/jin-context": "~2.0",
+        "diatem-net/jin-filesystem": "~2.0",
+        "diatem-net/jin-utils": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jin2\\": "src/"
+        }
+    }
+}
