@@ -14,7 +14,7 @@ use Jin2\Utils\StringTools;
 class Navigation
 {
 
-  private static $initialized = false;
+  protected static $initialized = false;
 
   public static function clearQueryArg($code)
   {
@@ -70,7 +70,7 @@ class Navigation
     return Url::getCurrentUrl(null, $addedArgs, $exceptedArgs, true, $anchor);
   }
 
-  private static function initialize()
+  protected static function initialize()
   {
     if (!self::$initialized) {
       Url::setDefaultUrlPattern('%q%');

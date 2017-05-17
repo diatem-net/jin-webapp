@@ -21,12 +21,12 @@ class Url
   /**
    * @var string  Modèle d'Url par défaut. (%a% désigne par ex. un argument a)
    */
-  private static $defaultUrlPattern = '';
+  protected static $defaultUrlPattern = '';
 
   /**
    * @var array  Arguments détectés dans le modèle d'Url par défaut
    */
-  private static $defaultUrlPatternArgs = array();
+  protected static $defaultUrlPatternArgs = array();
 
   /**
    * Modifie le modèle d'Url par défaut. (%a% désigne par ex. un argument a)
@@ -79,7 +79,7 @@ class Url
    * @param string $anchor            Ancre (null par défaut)
    * @return string
    */
-  private static function buildUrl($urlPattern = null, $arguments = array(), $absolute = true, $fromCurrent = false, $ignoredArguments = array(), $anchor = null)
+  protected static function buildUrl($urlPattern = null, $arguments = array(), $absolute = true, $fromCurrent = false, $ignoredArguments = array(), $anchor = null)
   {
     $url = '';
     $urlPatternArgs = array();
@@ -132,7 +132,7 @@ class Url
    * @param string $urlPattern    Modèle d'Url à analyser
    * @return array
    */
-  private static function analyseUrlPattern($urlPattern)
+  protected static function analyseUrlPattern($urlPattern)
   {
     $retour = array();
     $matches = StringTools::getMatches($urlPattern, '/%.*?%/');
@@ -150,7 +150,7 @@ class Url
    * @param  array $arguments          Arguments GET de l'Url
    * @return string
    */
-  private static function executeUrlPattern($urlPattern, $urlPatternArgs, $arguments)
+  protected static function executeUrlPattern($urlPattern, $urlPatternArgs, $arguments)
   {
     $out = $urlPattern;
     foreach($urlPatternArgs AS $a) {

@@ -14,7 +14,7 @@ use Jin2\Context\HttpHeader;
 class Router
 {
 
-  private static $rootArgumentName = 'q';
+  protected static $rootArgumentName = 'q';
 
   public static function setRootArgumentName($rootArgumentName)
   {
@@ -39,7 +39,7 @@ class Router
     }
   }
 
-  private function rootToIndex()
+  protected function rootToIndex()
   {
     if (is_dir(WebApp::getPagesFolder().'_root/')) {
       WebApp::$page = new Page('_root', Request::getRequestMethod());
@@ -48,7 +48,7 @@ class Router
     }
   }
 
-  private function rootTo404()
+  protected function rootTo404()
   {
     if (is_dir(WebApp::getPagesFolder().'_404/')) {
       WebApp::$page = new Page('_404', Request::getRequestMethod());
@@ -58,7 +58,7 @@ class Router
     }
   }
 
-  private function rootToPage($page)
+  protected function rootToPage($page)
   {
     WebApp::$page = new Page($page, Request::getRequestMethod());
   }

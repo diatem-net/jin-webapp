@@ -10,9 +10,9 @@ namespace Jin2\WebApp\Request;
 class Argument
 {
 
-  private $name;
-  private $type;
-  private $value;
+  protected $name;
+  protected $type;
+  protected $value;
 
   public function __construct($name, $type, $value)
   {

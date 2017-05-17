@@ -12,7 +12,7 @@ use Jin2\WebApp\WebApp;
 class View
 {
 
-  private $file;
+  protected $file;
 
   public function __construct($file)
   {

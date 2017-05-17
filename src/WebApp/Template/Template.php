@@ -15,8 +15,8 @@ use Jin2\Utils\StringTools;
 class Template
 {
 
-  private $templateFolder;
-  private $templateName;
+  protected $templateFolder;
+  protected $templateName;
 
   public function __construct($templateName)
   {
@@ -39,7 +39,7 @@ class Template
     return $enveloppe;
   }
 
-  private function replaceIncludes($content)
+  protected function replaceIncludes($content)
   {
     $matches = StringTools::getMatches($content, '/#include::.*?#/');
 
@@ -62,7 +62,7 @@ class Template
     return $content;
   }
 
-  private function replaceCustomWords($content)
+  protected function replaceCustomWords($content)
   {
     $vars = Output::getAllVars();
     foreach($vars AS $k => $v) {
@@ -72,7 +72,7 @@ class Template
     return $content;
   }
 
-  private function replaceMagicWords($content)
+  protected function replaceMagicWords($content)
   {
     $content = StringTools::replaceAll($content, '#magic::url#', BASE_URL);
     $content = StringTools::replaceAll($content, '#magic::root#',ROOT_PATH);

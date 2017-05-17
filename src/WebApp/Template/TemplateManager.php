@@ -13,7 +13,7 @@ use Jin2\Utils\StringTools;
 class TemplateManager
 {
 
-  private static $templates = array();
+  protected static $templates = array();
 
   public static function addTemplate($templateCode)
   {

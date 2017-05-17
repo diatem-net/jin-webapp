@@ -14,12 +14,12 @@ use Jin2\Utils\StringTools;
 class WebApp
 {
 
-  private static $path;
-  private static $url;
+  protected static $path;
+  protected static $url;
 
-  private static $pageFolder = 'pages';
-  private static $templateFolder = 'templates';
-  private static $cacheFolder = 'cache';
+  protected static $pageFolder = 'pages';
+  protected static $templateFolder = 'templates';
+  protected static $cacheFolder = 'cache';
 
   public static $router;
   public static $page;

@@ -12,10 +12,10 @@ use Jin2\WebApp\Request\Request;
 class BreadcrumbItem
 {
 
-  private $label;
-  private $urlCode;
-  private $url;
-  private $addedArgs;
+  protected $label;
+  protected $urlCode;
+  protected $url;
+  protected $addedArgs;
 
   public function __construct($label, $urlCode = null, $addedArgs = array())
   {

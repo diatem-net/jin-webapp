@@ -12,8 +12,8 @@ use Jin2\WebApp\WebApp;
 class Request
 {
 
-  private static $args = array();
-  private static $prepared = false;
+  protected static $args = array();
+  protected static $prepared = false;
 
   public static function getArgument($name, $nullIfNotExists = false)
   {
@@ -110,7 +110,7 @@ class Request
     return self::getArgumentsByType('FILES');
   }
 
-  private static function getArgumentsByType($type)
+  protected static function getArgumentsByType($type)
   {
     self::prepare();
 
@@ -123,7 +123,7 @@ class Request
     return $args;
   }
 
-  private static function prepare()
+  protected static function prepare()
   {
     if (!self::$prepared) {
       foreach ($_GET AS $k => $v) {

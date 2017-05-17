@@ -16,8 +16,8 @@ class Page
 
   public $controller;
   public $view;
-  private $method;
-  private $code;
+  protected $method;
+  protected $code;
 
   public function __construct($code, $method)
   {
@@ -49,7 +49,7 @@ class Page
     return $this->method;
   }
 
-  private function setController()
+  protected function setController()
   {
     if (is_file($this->getRootPath() . 'controller/' . $this->getMethod() . '/' . $this->getNameSpace() . '_controller.php')) {
       // Controler method
@@ -75,7 +75,7 @@ class Page
     }
   }
 
-  private function setView()
+  protected function setView()
   {
     if (is_file($this->getRootPath() . 'view/' . $this->getMethod() . '/view.php')) {
       // View for method specific

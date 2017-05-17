@@ -10,7 +10,7 @@ namespace Jin2\WebApp\Utils;
 class Breadcrumb
 {
 
-  private static $items = array();
+  protected static $items = array();
 
   public static function add($label, $urlCode = null, $addedArgs = array())
   {

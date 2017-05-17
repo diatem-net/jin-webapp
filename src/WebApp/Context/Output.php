@@ -12,7 +12,7 @@ use Jin2\WebApp\Template\TemplateManager;
 class Output
 {
 
-  private static $vars = array();
+  protected static $vars = array();
   public static $controller;
 
   public static function addTemplate($code)
