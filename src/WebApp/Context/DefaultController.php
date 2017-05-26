@@ -7,7 +7,7 @@
 
 namespace Jin2\WebApp\Context;
 
-abstract class DefaultController
+class DefaultController
 {
 
   public function onInit()
