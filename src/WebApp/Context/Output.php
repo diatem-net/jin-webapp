@@ -20,6 +20,13 @@ class Output
   protected static $vars = array();
 
   /**
+   * Quick access to the curent controller
+   *
+   * @var DefaultController
+   */
+  public static $controller;
+
+  /**
    * Add a new template through the TemplateManager
    *
    * @param string $templateCode
