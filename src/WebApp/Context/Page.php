@@ -121,6 +121,7 @@ class Page
     }
 
     if ($controller) {
+      include $controller;
       $classPath = '\\' . $this->getNameSpace() . '_controller';
       $this->controller = new $classPath();
     } else {
