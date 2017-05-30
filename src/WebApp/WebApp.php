@@ -17,14 +17,14 @@ class WebApp
   protected static $path;
   protected static $url;
 
-  protected static $pageFolder = 'pages';
+  protected static $pageFolder = '';
   protected static $templateFolder = 'templates';
   protected static $cacheFolder = 'cache';
 
   public static $router;
   public static $page;
 
-  public static function init($path, $url = DIRECTORY_SEPARATOR)
+  public static function init($path = 'pages/', $url = DIRECTORY_SEPARATOR)
   {
     self::$path = rtrim(realpath($path), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     self::$url = $url;
