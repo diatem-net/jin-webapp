@@ -13,8 +13,18 @@ use Jin2\Utils\StringTools;
 class TemplateManager
 {
 
+  /**
+   * Templates
+   *
+   * @var array<Template>
+   */
   protected static $templates = array();
 
+  /**
+   * Add a new template
+   *
+   * @param string $templateCode
+   */
   public static function addTemplate($templateCode)
   {
     if (!is_dir(WebApp::getTemplateFolder().$templateCode)) {
@@ -24,6 +34,11 @@ class TemplateManager
     }
   }
 
+  /**
+   * Render content
+   *
+   * @param string $content
+   */
   public static function render($content)
   {
     $temp = '#content#';

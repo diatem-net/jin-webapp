@@ -19,12 +19,16 @@ class Url
 {
 
   /**
-   * @var string  Modèle d'Url par défaut. (%a% désigne par ex. un argument a)
+   * Modèle d'Url par défaut. (%a% désigne par ex. un argument a)
+   *
+   * @var string
    */
   protected static $defaultUrlPattern = '';
 
   /**
-   * @var array  Arguments détectés dans le modèle d'Url par défaut
+   * Arguments détectés dans le modèle d'Url par défaut
+   *
+   * @var array
    */
   protected static $defaultUrlPatternArgs = array();
 
@@ -42,10 +46,10 @@ class Url
   /**
    * Construit une Url
    *
-   * @param string $urlPattern        Modèle d'url ou base de l'Url. (%a% désigne par ex. un argument a) NULL indique que c'est le modèle d'Url par défaut qui sera utilisé
-   * @param array $arguments          Arguments à transmettre en GET array('nomArgument' => 'valeurArgument')
-   * @param boolean $absolute         Url absolue (par défaut) ou relative
-   * @param string $anchor            Ancre (null par défaut)
+   * @param  string $urlPattern  (optional) Modèle d'url ou base de l'Url. (%a% désigne par ex. un argument a) NULL indique que c'est le modèle d'Url par défaut qui sera utilisé
+   * @param  array $arguments    (optional) Arguments à transmettre en GET array('nomArgument' => 'valeurArgument')
+   * @param  boolean $absolute   (optional) Url absolue (par défaut) ou relative
+   * @param  string $anchor      (optional) Ancre (null par défaut)
    * @return string
    */
   public static function getUrl($urlPattern = null, $arguments = array(), $absolute = true, $anchor = null)
@@ -56,11 +60,11 @@ class Url
   /**
    * Retourne l'Url courante modifiée selon les paramètres transmis
    *
-   * @param string $urlPattern        Modèle d'url ou base de l'Url. (%a% désigne par ex. un argument a) NULL indique que c'est le modèle d'Url par défaut qui sera utilisé
-   * @param array $addedArguments     Arguments supplémentaires à transmettre en GET array('nomArgument' => 'valeurArgument')
-   * @param array $ignoredArguments   Arguments GET à ignorer array('nomArgument1', 'nomArgument2')
-   * @param boolean $absolute         url absolue (par défaut) ou relative
-   * @param string $anchor            Ancre (null par défaut)
+   * @param  string  $urlPattern        (optional) Modèle d'url ou base de l'Url. (%a% désigne par ex. un argument a) NULL indique que c'est le modèle d'Url par défaut qui sera utilisé
+   * @param  array   $addedArguments    (optional) Arguments supplémentaires à transmettre en GET array('nomArgument' => 'valeurArgument')
+   * @param  array   $ignoredArguments  (optional) Arguments GET à ignorer array('nomArgument1', 'nomArgument2')
+   * @param  boolean $absolute          (optional) Url absolue (par défaut) ou relative
+   * @param  string  $anchor            (optional) Ancre (null par défaut)
    * @return string
    */
   public static function getCurrentUrl($urlPattern = null, $addedArguments = array(), $ignoredArguments = array(), $absolute = true, $anchor = null)
@@ -71,12 +75,12 @@ class Url
   /**
    * Construit une Url
    *
-   * @param string $urlPattern        Modèle d'url ou base de l'Url. (%a% désigne par ex. un argument a) NULL indique que c'est le modèle d'Url par défaut qui sera utilisé
-   * @param array $arguments          Arguments à transmettre en GET array('nomArgument' => 'valeurArgument')
-   * @param boolean $absolute         url absolue (par défaut) ou relative
-   * @param boolean $fromCurrent      si TRUE on détermine certains paramètres de l'Url courante
-   * @param array $ignoredArguments   Arguments GET à ignorer array('nomArgument1', 'nomArgument2') (Appliqué uniquement si $fromCurrent = TRUE)
-   * @param string $anchor            Ancre (null par défaut)
+   * @param  string  $urlPattern        (optional) Modèle d'url ou base de l'Url. (%a% désigne par ex. un argument a) NULL indique que c'est le modèle d'Url par défaut qui sera utilisé
+   * @param  array   $arguments         (optional) Arguments à transmettre en GET array('nomArgument' => 'valeurArgument')
+   * @param  boolean $absolute          (optional) Url absolue (par défaut) ou relative
+   * @param  boolean $fromCurrent       (optional) Si TRUE on détermine certains paramètres de l'Url courante
+   * @param  array   $ignoredArguments  (optional) Arguments GET à ignorer array('nomArgument1', 'nomArgument2') (Appliqué uniquement si $fromCurrent = TRUE)
+   * @param  string  $anchor            (optional) Ancre (null par défaut)
    * @return string
    */
   protected static function buildUrl($urlPattern = null, $arguments = array(), $absolute = true, $fromCurrent = false, $ignoredArguments = array(), $anchor = null)
@@ -129,7 +133,7 @@ class Url
   /**
    * Analyse un modèle d'Url pour retourner les arguments constritutifs
    *
-   * @param string $urlPattern    Modèle d'Url à analyser
+   * @param  string $urlPattern  Modèle d'Url à analyser
    * @return array
    */
   protected static function analyseUrlPattern($urlPattern)
@@ -145,9 +149,9 @@ class Url
   /**
    * Applique un modèle d'Url sur une Url
    *
-   * @param  string $urlPattern        Modèle d'Url
-   * @param  array $urlPatternArgs     Arguments constitutifs du modèle
-   * @param  array $arguments          Arguments GET de l'Url
+   * @param  string $urlPattern      Modèle d'Url
+   * @param  array  $urlPatternArgs  Arguments constitutifs du modèle
+   * @param  array  $arguments       Arguments GET de l'Url
    * @return string
    */
   protected static function executeUrlPattern($urlPattern, $urlPatternArgs, $arguments)

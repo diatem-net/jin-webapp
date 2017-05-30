@@ -16,6 +16,19 @@ class Router
 
   protected static $rootArgumentName = 'q';
 
+  public function __construct()
+  {
+    if (!Request::getArgumentValue(self::$rootArgumentName, true) || Request::getArgumentValue(self::$rootArgumentName, true) == 'index.html') {
+      $this->rootToIndex();
+    } else {
+      if (is_dir(WebApp::getPageFolder().Request::getArgumentValue(self::$rootArgumentName))) {
+        $this->rootToPage(Request::getArgumentValue(self::$rootArgumentName));
+      } else {
+        $this->rootTo404();
+      }
+    }
+  }
+
   public static function setRootArgumentName($rootArgumentName)
   {
     self::$rootArgumentName = $rootArgumentName;
@@ -26,22 +39,9 @@ class Router
     return self::$rootArgumentName;
   }
 
-  public function __construct()
-  {
-    if (!Request::getArgumentValue(self::$rootArgumentName, true) || Request::getArgumentValue(self::$rootArgumentName, true) == 'index.html') {
-      $this->rootToIndex();
-    } else {
-      if (is_dir(WebApp::getPagesFolder().Request::getArgumentValue(self::$rootArgumentName))) {
-        $this->rootToPage(Request::getArgumentValue(self::$rootArgumentName));
-      } else {
-        $this->rootTo404();
-      }
-    }
-  }
-
   protected function rootToIndex()
   {
-    if (is_dir(WebApp::getPagesFolder().'_root/')) {
+    if (is_dir(WebApp::getPageFolder().'_root/')) {
       WebApp::$page = new Page('_root', Request::getRequestMethod());
     } else {
       throw new \Exception('Page root introuvable (_root)');
@@ -50,7 +50,7 @@ class Router
 
   protected function rootTo404()
   {
-    if (is_dir(WebApp::getPagesFolder().'_404/')) {
+    if (is_dir(WebApp::getPageFolder().'_404/')) {
       WebApp::$page = new Page('_404', Request::getRequestMethod());
     } else {
       HttpHeader::return404();

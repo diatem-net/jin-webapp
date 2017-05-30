@@ -14,11 +14,40 @@ use Jin2\Utils\StringTools;
 class Page
 {
 
+  /**
+   * Page controller
+   *
+   * @var DefaultController
+   */
   public $controller;
+
+  /**
+   * Page view
+   *
+   * @var View
+   */
   public $view;
+
+  /**
+   * Method used (POST, GET...)
+   *
+   * @var string
+   */
   protected $method;
+
+  /**
+   * Url code used
+   *
+   * @var string
+   */
   protected $code;
 
+  /**
+   * Constructor
+   *
+   * @param string $code    Code to use
+   * @param string $method  Method to use
+   */
   public function __construct($code, $method)
   {
     if (StringTools::right($code, 1) == '/') {
@@ -34,40 +63,64 @@ class Page
     $this->setView();
   }
 
+  /**
+   * Return the current code
+   *
+   * @example With the request "POST /user/login HTTP/1.0", the code will be user/login
+   *
+   * @return string  Current code
+   */
   public function getCode()
   {
     return $this->code;
   }
 
+  /**
+   * Return the current namespace
+   *
+   * @example With the request "POST /user/login HTTP/1.0", the namespace will be user_login
+   *
+   * @return string  Current namespace
+   */
   public function getNamespace()
   {
     return StringTools::replaceAll($this->getCode(), '/', '_');
   }
 
+  /**
+   * Return the current method (GET, POST...)
+   *
+   * @return string  Current method
+   */
   public function getMethod()
   {
     return $this->method;
   }
 
+  /**
+   * Set the current controller, searching for it in various places.
+   *
+   * @example
+   * With the request "POST /user/login HTTP/1.0", WebApp will search for the following files :
+   * - user/login/controller/POST/user_login_controller.php  (search for method-related controller)
+   * - user/login/controller/GET/user_login_controller.php   (fallback on GET controller)
+   * - user/login/controller/user_login_controller.php       (fallback on global controller)
+   * - user/login/user_login_controller.php                  (fallback on root controller)
+   */
   protected function setController()
   {
+    $controller = null;
     if (is_file($this->getRootPath() . 'controller/' . $this->getMethod() . '/' . $this->getNameSpace() . '_controller.php')) {
-      // Controler method
-      include $this->getRootPath() . 'controller/' . $this->getMethod() . '/' . $this->getNameSpace() . '_controller.php';
-      $classPath = '\\' . $this->getNameSpace() . '_controller';
-      $this->controller = new $classPath();
-    } else if ($this->getMethod() != 'GET' && is_file($this->getRootPath() . 'controller/GET/' . $this->getNameSpace() . '_controller.php')) {
-      // Default controller GET
-      include $this->getRootPath() . 'controller/GET/' . $this->getNameSpace() . '_controller.php';
-      $classPath = '\\' . $this->getNameSpace() . '_controller';
-      $this->controller = new $classPath();
+      $controller = $this->getRootPath() . 'controller/' . $this->getMethod() . '/' . $this->getNameSpace() . '_controller.php';
+    } else if (is_file($this->getRootPath() . 'controller/GET/' . $this->getNameSpace() . '_controller.php')) {
+      $controller = $this->getRootPath() . 'controller/GET/' . $this->getNameSpace() . '_controller.php';
     } else if (is_file($this->getRootPath() . 'controller/' . $this->getNameSpace() . '_controller.php')) {
-      include $this->getRootPath() . 'controller/' . $this->getNameSpace() . '_controller.php';
-      $classPath = '\\' . $this->getNameSpace() . '_controller';
-      $this->controller = new $classPath();
+      $controller = $this->getRootPath() . 'controller/' . $this->getNameSpace() . '_controller.php';
     } else if (is_file($this->getRootPath() . '' . $this->getNameSpace() . '_controller.php')) {
-      // Root controller
-      include $this->getRootPath() . '' . $this->getNameSpace() . '_controller.php';
+      $controller = $this->getRootPath() . '' . $this->getNameSpace() . '_controller.php';
+    }
+
+    if ($controller) {
       $classPath = '\\' . $this->getNameSpace() . '_controller';
       $this->controller = new $classPath();
     } else {
@@ -75,44 +128,59 @@ class Page
     }
   }
 
+  /**
+   * Set the current view, searching for it in various places.
+   *
+   * @example
+   * With the request "POST /user/login HTTP/1.0", WebApp will search for the following files :
+   * - user/login/view/POST/view.php  (search for method-related view)
+   * - user/login/view/GET/view.php   (fallback on GET view)
+   * - user/login/view/view.php       (fallback on global view)
+   * - user/login/view.php            (fallback on root view)
+   * - user/login/index.php           (fallback on root index file)
+   */
   protected function setView()
   {
     if (is_file($this->getRootPath() . 'view/' . $this->getMethod() . '/view.php')) {
-      // View for method specific
       $this->view = new View($this->getRootPath() . 'view/' . $this->getMethod() . '/view.php');
-    } else if ($this->getMethod() != 'GET' && is_file($this->getRootPath() . 'view/GET/view.php')) {
-      // View for default GET
+    } else if (is_file($this->getRootPath() . 'view/GET/view.php')) {
       $this->view = new View($this->getRootPath() . 'view/GET/view.php');
     } else if (is_file($this->getRootPath() . 'view/view.php')) {
-      // View folder
       $this->view = new View($this->getRootPath() . 'view/view.php');
     } else if (is_file($this->getRootPath() . 'view.php')) {
       $this->view = new View($this->getRootPath() . 'view.php');
     } else if (is_file($this->getRootPath() . 'index.php')) {
-      // index.php view
       $this->view = new View($this->getRootPath() . 'index.php');
-    } else if (is_file($this->getRootPath() . 'view.php')) {
-      // view.php view
-      $this->view = new View($this->getRootPath() . 'view.php');
     } else {
       throw new \Exception('Vue introuvable pour la page ' . $this->code);
     }
   }
 
+  /**
+   * Return the page root path, based on WebApp root path and the curent code
+   *
+   * @return string  Page root path
+   */
   public function getRootPath()
   {
-    $folder = WebApp::getPagesFolder() . $this->code;
+    $folder = WebApp::getPageFolder() . $this->code;
     if (StringTools::right($folder, 1) != '/') {
       $folder .= '/';
     }
     return $folder;
   }
 
+  /**
+   * Trigger actions when the page is initialized
+   */
   public function onInit()
   {
     $this->controller->onInit();
   }
 
+  /**
+   * Trigger actions when the a POST request was made
+   */
   public function onPost()
   {
     if (!empty($_POST)) {
@@ -120,11 +188,17 @@ class Page
     }
   }
 
+  /**
+   * Trigger actions before the page rendering
+   */
   public function beforeRender()
   {
     $this->controller->beforeRender();
   }
 
+  /**
+   * Render the page
+   */
   public function render()
   {
     $baseContent = $this->view->executeAndReturnContent();
@@ -133,6 +207,9 @@ class Page
     return $content;
   }
 
+  /**
+   * Trigger actions after the page rendering
+   */
   public function afterRender()
   {
     $this->controller->afterRender();
